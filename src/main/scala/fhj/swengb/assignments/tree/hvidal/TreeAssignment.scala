@@ -69,8 +69,8 @@ object Graph {
 
     def createGraph(start: L2D, acc: Int): Tree[L2D] = acc match {
       case empty if treeDepth == 0 => Node(start)
-      case normal => Branch(Node(start), Branch(createGraph(start.left(factor,angle,colorMap(acc-1)),acc+1), createGraph(start.right(factor,angle,colorMap(acc-1)),acc+1)))
       case endBranch if acc == treeDepth => Branch(Node(start), Branch(Node(start.left(factor,angle,colorMap(acc-1))), Node(start.right(factor,angle,colorMap(acc-1)))))
+      case normal => Branch(Node(start), Branch(createGraph(start.left(factor,angle,colorMap(acc-1)),acc+1), createGraph(start.right(factor,angle,colorMap(acc-1)),acc+1)))
 
     }
     createGraph(L2D(start, initialAngle, length,colorMap(0)),1)
@@ -117,8 +117,10 @@ object L2D {
     * @return
     */
   def apply(start: Pt2D, angle: AngleInDegrees, length: Double, color: Color): L2D = {
-    val xend = round(length*Math.cos(toRadiants(angle)))+start.x
-    val xend = round(length*Math.cos(toRadiants(angle)))+start.x
+    val xEnd = round(length*Math.cos(toRadiants(angle)))+start.x
+    val yEnd = round(length*Math.sin(toRadiants(angle)))+start.y
+    val pointEnd = Pt2D(xEnd,yEnd)
+    return L2D(start: Pt2D,pointEnd,color)
 
   }
 

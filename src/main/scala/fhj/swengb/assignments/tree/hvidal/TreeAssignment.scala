@@ -1,4 +1,4 @@
-package fhj.swengb.assignments.tree.rladstaetter
+package fhj.swengb.assignments.tree.hvidal
 
 import javafx.scene.paint.Color
 
@@ -39,8 +39,10 @@ object Graph {
     * @param convert a converter function
     * @return
     */
-  def traverse[A, B](tree: Tree[A])(convert: A => B): Seq[B] = {
-  ???
+  def traverse[A, B](tree: Tree[A])(convert: A => B): Seq[B] = tree match{
+    case Node(x) => Seq(convert(x))
+    case Branch(left,right) => traverse(left)(convert) ++ traverse(right)(convert)
+
   }
 
   /**
@@ -64,7 +66,14 @@ object Graph {
               angle: Double = 45.0,
               colorMap: Map[Int, Color] = Graph.colorMap): Tree[L2D] = {
     assert(treeDepth <= colorMap.size, s"Treedepth higher than color mappings - bailing out ...")
-    ???
+
+    def createGraph(start: L2D, acc: Int): Tree[L2D] = acc match {
+      case empty if treeDepth == 0 => Node(start)
+      case normal => Branch(Node(start), Branch(createGraph(start.left(factor,angle,colorMap(acc-1)),acc+1), createGraph(start.right(factor,angle,colorMap(acc-1)),acc+1)))
+      case endBranch if acc == treeDepth => Branch(Node(start), Branch(Node(start.left(factor,angle,colorMap(acc-1))), Node(start.right(factor,angle,colorMap(acc-1)))))
+
+    }
+    createGraph(L2D(start, initialAngle, length,colorMap(0)),1)
  }
 
 }

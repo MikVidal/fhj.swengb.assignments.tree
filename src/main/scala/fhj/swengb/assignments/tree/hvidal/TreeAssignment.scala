@@ -87,7 +87,7 @@ object MathUtil {
     * @return
     */
   def round(value: Double): Double = {
-    ???
+    Math.round(value*1000.0)/1000.0;
   }
 
   /**
@@ -97,7 +97,7 @@ object MathUtil {
     * @return
     */
   def toRadiants(angle: AngleInDegrees): AngleInRadiants = {
-   ???
+   math.toRadians(angle)
   }
 }
 
@@ -117,7 +117,9 @@ object L2D {
     * @return
     */
   def apply(start: Pt2D, angle: AngleInDegrees, length: Double, color: Color): L2D = {
-    ???
+    val xend = round(length*Math.cos(toRadiants(angle)))+start.x
+    val xend = round(length*Math.cos(toRadiants(angle)))+start.x
+
   }
 
 
